@@ -1,19 +1,24 @@
 -- ================================================
---   JJS | Todo Perfect Swap (Mobile) + Key System
---   Key: Lifetime - Có nút Get Key
+--   JJS | Todo Perfect Swap (Mobile)
+--   Delay: 0.52 seconds
+--   Lifetime Key System
 -- ================================================
 
 local Players    = game:GetService("Players")
-local SG         = game:GetService("StarterGui")
-local TW         = game:GetService("TweenService")
-local LP         = Players.LocalPlayer
+local StarterGui = game:GetService("StarterGui")
+local TweenService = game:GetService("TweenService")
+local LocalPlayer = Players.LocalPlayer
 
 local correctKey = "ppocoxmsmakiwoqsksms"
 local keyLink    = "https://link-hub.net/4473711/MTfE77G0aL7n"
 
-local function notify(t, b)
+local function notify(title, text)
     pcall(function()
-        SG:SetCore("SendNotification", {Title=t, Text=b, Duration=4})
+        StarterGui:SetCore("SendNotification", {
+            Title = title,
+            Text = text,
+            Duration = 4
+        })
     end)
 end
 
@@ -21,16 +26,16 @@ end
 local keyGui = Instance.new("ScreenGui")
 keyGui.Name = "KeySystem"
 keyGui.ResetOnSpawn = false
-keyGui.Parent = LP.PlayerGui
+keyGui.Parent = LocalPlayer.PlayerGui
 
-local mainFrame = Instance.new("Frame")
-mainFrame.Size = UDim2.new(0, 280, 0, 220)
-mainFrame.Position = UDim2.new(0.5, -140, 0.5, -110)
-mainFrame.BackgroundColor3 = Color3.fromRGB(22, 22, 35)
-mainFrame.BorderSizePixel = 0
-mainFrame.Parent = keyGui
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 280, 0, 220)
+frame.Position = UDim2.new(0.5, -140, 0.5, -110)
+frame.BackgroundColor3 = Color3.fromRGB(22, 22, 35)
+frame.BorderSizePixel = 0
+frame.Parent = keyGui
 
-local corner = Instance.new("UICorner", mainFrame)
+local corner = Instance.new("UICorner", frame)
 corner.CornerRadius = UDim.new(0, 14)
 
 local title = Instance.new("TextLabel")
@@ -40,28 +45,28 @@ title.Text = "TODO PERFECT SWAP"
 title.TextColor3 = Color3.fromRGB(255, 200, 200)
 title.Font = Enum.Font.GothamBlack
 title.TextSize = 24
-title.Parent = mainFrame
+title.Parent = frame
 
 local keyLabel = Instance.new("TextLabel")
 keyLabel.Size = UDim2.new(1, -20, 0, 30)
 keyLabel.Position = UDim2.new(0, 10, 0, 60)
 keyLabel.BackgroundTransparency = 1
-keyLabel.Text = "Nhập Key Lifetime"
+keyLabel.Text = "Enter Lifetime Key"
 keyLabel.TextColor3 = Color3.fromRGB(180, 180, 255)
 keyLabel.Font = Enum.Font.Gotham
 keyLabel.TextSize = 16
-keyLabel.Parent = mainFrame
+keyLabel.Parent = frame
 
 local keyBox = Instance.new("TextBox")
 keyBox.Size = UDim2.new(1, -20, 0, 40)
 keyBox.Position = UDim2.new(0, 10, 0, 95)
 keyBox.BackgroundColor3 = Color3.fromRGB(40, 40, 60)
-keyBox.PlaceholderText = "Dán key vào đây..."
+keyBox.PlaceholderText = "Paste key here..."
 keyBox.Text = ""
 keyBox.TextColor3 = Color3.new(1,1,1)
 keyBox.Font = Enum.Font.Gotham
 keyBox.TextSize = 16
-keyBox.Parent = mainFrame
+keyBox.Parent = frame
 Instance.new("UICorner", keyBox).CornerRadius = UDim.new(0, 8)
 
 local submitBtn = Instance.new("TextButton")
@@ -72,7 +77,7 @@ submitBtn.Text = "SUBMIT KEY"
 submitBtn.TextColor3 = Color3.new(1,1,1)
 submitBtn.Font = Enum.Font.GothamBold
 submitBtn.TextSize = 16
-submitBtn.Parent = mainFrame
+submitBtn.Parent = frame
 Instance.new("UICorner", submitBtn).CornerRadius = UDim.new(0, 8)
 
 local getKeyBtn = Instance.new("TextButton")
@@ -83,35 +88,29 @@ getKeyBtn.Text = "GET KEY"
 getKeyBtn.TextColor3 = Color3.new(1,1,1)
 getKeyBtn.Font = Enum.Font.GothamBold
 getKeyBtn.TextSize = 16
-getKeyBtn.Parent = mainFrame
+getKeyBtn.Parent = frame
 Instance.new("UICorner", getKeyBtn).CornerRadius = UDim.new(0, 8)
 
 -- Submit Key
 submitBtn.MouseButton1Click:Connect(function()
     if keyBox.Text == correctKey then
         keyGui:Destroy()
-        notify("✅ Key Correct!", "Todo Perfect Swap đã được kích hoạt!")
+        notify("✅ Key Correct!", "Todo Perfect Swap has been unlocked!")
         loadMainScript()
     else
-        notify("❌ Key Sai!", "Vui lòng lấy key đúng từ nút GET KEY")
+        notify("❌ Incorrect Key!", "Please get the key from the GET KEY button")
     end
 end)
 
 -- Get Key Button
 getKeyBtn.MouseButton1Click:Connect(function()
-    notify("🔗 Đang mở link lấy key...", "Vui lòng chờ 5-10 giây")
-    task.wait(1)
     setclipboard(keyLink)
-    game:GetService("StarterGui"):SetCore("SendNotification", {
-        Title = "Key Link Copied!",
-        Text = "Đã copy link vào clipboard. Mở trình duyệt và dán link để lấy key.",
-        Duration = 6
-    })
+    notify("🔗 Link Copied!", "Paste the link in your browser to get the key.\n(Take 5-10 seconds)")
 end)
 
-print("Key System Loaded - Nhập key để tiếp tục")
+print("Key System Loaded - Enter the key to continue")
 
--- ================== MAIN SCRIPT (Perfect Swap) ==================
+-- ================== MAIN PERFECT SWAP SCRIPT ==================
 function loadMainScript()
     local enabled = false
     local canFire = true
@@ -154,7 +153,7 @@ function loadMainScript()
 
     setreadonly(mt, true)
 
-    -- GUI Perfect Swap
+    -- Main GUI
     local sg = Instance.new("ScreenGui")
     sg.Name = "TodoGui"
     sg.ResetOnSpawn = false
