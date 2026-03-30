@@ -1,7 +1,6 @@
 -- ================================================
---   JJS | Todo Perfect Swap (Mobile)
---   Delay: 0.52 seconds
---   Lifetime Key System
+--   JJS | Todo Perfect Swap (Mobile) + Key System
+--   Fixed: Key correct → Main script appears
 -- ================================================
 
 local Players    = game:GetService("Players")
@@ -29,9 +28,9 @@ keyGui.ResetOnSpawn = false
 keyGui.Parent = LocalPlayer.PlayerGui
 
 local frame = Instance.new("Frame")
-frame.Size = UDim2.new(0, 280, 0, 220)
-frame.Position = UDim2.new(0.5, -140, 0.5, -110)
-frame.BackgroundColor3 = Color3.fromRGB(22, 22, 35)
+frame.Size = UDim2.new(0, 290, 0, 240)
+frame.Position = UDim2.new(0.5, -145, 0.5, -120)
+frame.BackgroundColor3 = Color3.fromRGB(20, 20, 35)
 frame.BorderSizePixel = 0
 frame.Parent = keyGui
 
@@ -49,7 +48,7 @@ title.Parent = frame
 
 local keyLabel = Instance.new("TextLabel")
 keyLabel.Size = UDim2.new(1, -20, 0, 30)
-keyLabel.Position = UDim2.new(0, 10, 0, 60)
+keyLabel.Position = UDim2.new(0, 10, 0, 65)
 keyLabel.BackgroundTransparency = 1
 keyLabel.Text = "Enter Lifetime Key"
 keyLabel.TextColor3 = Color3.fromRGB(180, 180, 255)
@@ -58,20 +57,20 @@ keyLabel.TextSize = 16
 keyLabel.Parent = frame
 
 local keyBox = Instance.new("TextBox")
-keyBox.Size = UDim2.new(1, -20, 0, 40)
-keyBox.Position = UDim2.new(0, 10, 0, 95)
-keyBox.BackgroundColor3 = Color3.fromRGB(40, 40, 60)
+keyBox.Size = UDim2.new(1, -20, 0, 45)
+keyBox.Position = UDim2.new(0, 10, 0, 100)
+keyBox.BackgroundColor3 = Color3.fromRGB(35, 35, 55)
 keyBox.PlaceholderText = "Paste key here..."
 keyBox.Text = ""
 keyBox.TextColor3 = Color3.new(1,1,1)
 keyBox.Font = Enum.Font.Gotham
-keyBox.TextSize = 16
+keyBox.TextSize = 17
 keyBox.Parent = frame
 Instance.new("UICorner", keyBox).CornerRadius = UDim.new(0, 8)
 
 local submitBtn = Instance.new("TextButton")
 submitBtn.Size = UDim2.new(0.48, 0, 0, 45)
-submitBtn.Position = UDim2.new(0.02, 0, 0, 145)
+submitBtn.Position = UDim2.new(0.02, 0, 0, 155)
 submitBtn.BackgroundColor3 = Color3.fromRGB(40, 160, 40)
 submitBtn.Text = "SUBMIT KEY"
 submitBtn.TextColor3 = Color3.new(1,1,1)
@@ -82,7 +81,7 @@ Instance.new("UICorner", submitBtn).CornerRadius = UDim.new(0, 8)
 
 local getKeyBtn = Instance.new("TextButton")
 getKeyBtn.Size = UDim2.new(0.48, 0, 0, 45)
-getKeyBtn.Position = UDim2.new(0.5, 0, 0, 145)
+getKeyBtn.Position = UDim2.new(0.5, 0, 0, 155)
 getKeyBtn.BackgroundColor3 = Color3.fromRGB(60, 100, 200)
 getKeyBtn.Text = "GET KEY"
 getKeyBtn.TextColor3 = Color3.new(1,1,1)
@@ -91,21 +90,22 @@ getKeyBtn.TextSize = 16
 getKeyBtn.Parent = frame
 Instance.new("UICorner", getKeyBtn).CornerRadius = UDim.new(0, 8)
 
--- Submit Key
+-- Submit Key Function
 submitBtn.MouseButton1Click:Connect(function()
     if keyBox.Text == correctKey then
+        notify("✅ Success!", "Key is correct! Loading Perfect Swap...")
         keyGui:Destroy()
-        notify("✅ Key Correct!", "Todo Perfect Swap has been unlocked!")
-        loadMainScript()
+        task.wait(0.5)
+        loadMainScript()   -- Load main script after correct key
     else
-        notify("❌ Incorrect Key!", "Please get the key from the GET KEY button")
+        notify("❌ Wrong Key!", "Please get the correct key")
     end
 end)
 
 -- Get Key Button
 getKeyBtn.MouseButton1Click:Connect(function()
     setclipboard(keyLink)
-    notify("🔗 Link Copied!", "Paste the link in your browser to get the key.\n(Take 5-10 seconds)")
+    notify("🔗 Link Copied!", "Open your browser and paste the link.\nIt may take 5-10 seconds.")
 end)
 
 print("Key System Loaded - Enter the key to continue")
@@ -157,7 +157,7 @@ function loadMainScript()
     local sg = Instance.new("ScreenGui")
     sg.Name = "TodoGui"
     sg.ResetOnSpawn = false
-    sg.Parent = LP.PlayerGui
+    sg.Parent = LocalPlayer.PlayerGui
 
     local frame = Instance.new("Frame")
     frame.Size = UDim2.new(0, 220, 0, 90)
